@@ -40,7 +40,7 @@ export function KonamiEgg() {
         <div className="secret__eyebrow">{ui.egg.eyebrow}</div>
         <div className="secret__title">{ui.egg.title}</div>
         <div className="secret__frame">
-          <img src="/easter-egg.png" alt={ui.egg.alt} />
+          <img src={`${import.meta.env.BASE_URL}easter-egg.png`} alt={ui.egg.alt} />
         </div>
         <div className="secret__name">{ui.egg.name}</div>
         <HexButton onClick={() => setOpen(false)}>{ui.egg.ok}</HexButton>

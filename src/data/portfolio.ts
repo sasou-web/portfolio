@@ -5,7 +5,7 @@
  *  Tout le texte et toutes les images du site sont ici.
  *  Textes bilingues : L('français', 'english'). Une simple chaîne = identique dans les deux langues.
  *
- *  Images : une URL, ou un fichier déposé dans /public (ex: "/images/moi.jpg").
+ *  Images : une URL, ou un fichier déposé dans /public (ex: public/images/moi.jpg → "images/moi.jpg").
  *  Helpers : dd.* (Data Dragon, Riot), cd.* (CommunityDragon), gh() (tes dépôts GitHub),
  *  devicon() et iconify() (logos de technos).
  * ============================================================================
@@ -31,7 +31,7 @@ const monitoringIcon = iconify('mdi:monitor-dashboard', '#0ac8b9')
 export const site = {
   /** Titre de l'onglet du navigateur */
   title: L('Samir Moghrabi — Portfolio', 'Samir Moghrabi — Portfolio'),
-  /** Logo en haut à gauche (le "L" de League par défaut, ou "/mon-logo.png") */
+  /** Logo en haut à gauche (le "L" de League par défaut, ou "mon-logo.png" déposé dans public/) */
   logo: cd.lolLogo,
   /** Texte du gros bouton en haut à gauche ("JOUER" dans le vrai client) */
   playLabel: L('Contact', 'Contact'),
@@ -85,7 +85,7 @@ export const profile: Profile = {
     { name: L('Anglais', 'English'), level: 'B2' },
     { name: L('Arabe littéraire', 'Modern Standard Arabic'), level: 'B2' },
   ],
-  // Mets ton CV dans public/cv.pdf puis remplace par '/cv.pdf' pour afficher l'icône CV
+  // Mets ton CV dans public/cv.pdf puis remplace par 'cv.pdf' pour afficher l'icône CV
   cvUrl: undefined,
 }
 

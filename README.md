@@ -35,7 +35,7 @@ npm run build    # génère /dist (site statique, déployable partout)
 
 ### Images
 
-- Ta propre image : dépose-la dans `public/` (ex. `public/images/moi.jpg`) et mets `'/images/moi.jpg'`.
+- Ta propre image : dépose-la dans `public/` (ex. `public/images/moi.jpg`) et mets `'images/moi.jpg'`.
 - Fichiers de tes dépôts GitHub : `gh('Mira', 'docs/screenshots/readme-home.jpg')`.
 - Assets LoL : `dd.splash('Nunu', 26)`, `dd.square('Ahri')`, `dd.profileIcon(4405)`…
 - Logos de technos : `devicon('python')` (https://devicon.dev) ou `iconify('mdi:robot', '#0ac8b9')` (https://icon-sets.iconify.design).
@@ -43,7 +43,7 @@ npm run build    # génère /dist (site statique, déployable partout)
 ### CV
 
 Le CV n'est pas publié pour l'instant (il contient ton numéro de téléphone et ton adresse). Pour l'ajouter :
-dépose-le dans `public/cv.pdf` et mets `cvUrl: '/cv.pdf'` dans `profile` — l'icône CV apparaît dans la barre du haut.
+dépose-le dans `public/cv.pdf` et mets `cvUrl: 'cv.pdf'` dans `profile` — l'icône CV apparaît dans la barre du haut.
 
 ### Projets
 
@@ -66,15 +66,19 @@ elles sont utilisées automatiquement ; sinon le site retombe sur Cinzel et Sour
 
 ## Mise en ligne sur moghrabi.fr (GitHub Pages)
 
-Tout est prêt : `.github/workflows/deploy.yml` construit et publie le site à chaque push sur `main`,
-et `public/CNAME` rattache le site au domaine.
+Le dépôt est `sasou-web/portfolio`. Chaque push sur `main` reconstruit et publie le site
+(`.github/workflows/deploy.yml`). Adresse GitHub : https://sasou-web.github.io/portfolio/
 
-1. Crée un dépôt GitHub (ex. `sasou-web/portfolio`) et pousse le projet.
-2. Dans le dépôt : **Settings → Pages → Source : GitHub Actions**.
-3. Chez ton registrar, fais pointer `moghrabi.fr` vers GitHub Pages :
-   enregistrements `A` vers `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   (et `CNAME` de `www` vers `sasou-web.github.io`).
-4. Dans **Settings → Pages**, coche **Enforce HTTPS** une fois le certificat généré.
+Déjà en place : DNS OVH (`A` → 185.199.108–111.153, `www` → `sasou-web.github.io`) et GitHub Pages activé.
+
+Pour rattacher moghrabi.fr, GitHub demande de prouver que le domaine t'appartient
+(il est encore réservé par un ancien site Pages) :
+
+1. https://github.com/settings/pages → **Add a domain** → `moghrabi.fr`.
+2. OVH → moghrabi.fr → **Zone DNS** → **Ajouter une entrée** → **TXT** avec le sous-domaine et la valeur affichés par GitHub
+   (`_github-pages-challenge-sasou-web`).
+3. Retour sur GitHub → **Verify** (quelques minutes de propagation).
+4. Dépôt → **Settings → Pages → Custom domain** : `moghrabi.fr`, puis **Enforce HTTPS** quand le certificat est prêt.
 
 ## Mentions
 

@@ -5,7 +5,7 @@
  *  - Devicon : logos de technos pour les compétences
  *
  * Tu peux remplacer n'importe quelle image par un fichier à toi : mets-le dans /public
- * et utilise simplement son chemin, par ex. "/projets/mon-app.jpg".
+ * et utilise simplement son chemin, par ex. "projets/mon-app.jpg" pour public/projets/mon-app.jpg.
  */
 
 export const DDRAGON_VERSION = '16.19.1'
