@@ -12,6 +12,7 @@ Dépendances : pip install reportlab   (polices Calibri de Windows)
 """
 
 import json
+import re
 from pathlib import Path
 
 from reportlab.lib.colors import HexColor
@@ -53,7 +54,7 @@ EXPERIENCES = [
             "<b>Coordonner les déploiements</b> et assurer le support technique des utilisateurs finaux.",
             "<b>Automatiser les rapports de performance</b> en Excel VBA : génération et consolidation des données.",
             "Développer des macros (formules avancées, tableaux croisés dynamiques) pour le traitement des données.",
-            "Intégrer les scripts VBA aux processus de livraison et de versionnement.",
+            "Participer à l’intégration des scripts VBA aux processus de livraison et de versionnement.",
         ],
     },
     {
@@ -61,9 +62,9 @@ EXPERIENCES = [
         "org": "Mehad · Paris",
         "dates": "2022",
         "bullets": [
-            "<b>Automatiser la maintenance</b> des serveurs et postes en Python et Bash ; planifier mises à jour et correctifs (cron).",
-            "Rédiger et versionner les procédures dans Git pour faciliter restaurations et retours arrière.",
-            "Intégrer les outils de supervision Nagios et Zabbix avec les équipes support.",
+            "<b>Automatiser la maintenance</b> des serveurs et postes de travail en Python et Bash ; planifier les mises à jour et correctifs avec cron.",
+            "Rédiger et versionner les procédures dans Git pour faciliter les restaurations et les retours arrière.",
+            "Contribuer à l’intégration des outils de supervision Nagios et Zabbix avec les équipes support.",
         ],
     },
 ]
@@ -77,11 +78,11 @@ PROJECTS = [
     ("Qobee", "Rust, Tauri 2, Svelte 5",
      "lecteur audio haute fidélité : sortie bit-perfect WASAPI, égaliseur, ReplayGain."),
     ("XK Bot", "Node.js, discord.js",
-     "bot Discord en production : rangs via API, tournois, tickets, dashboard web."),
+     "bot Discord du serveur Xray Kaya : rangs via API, tournois, tickets, dashboard web."),
 ]
 
 EDUCATION = [
-    ("Mastère Management et Conseil en SI", "ESGI · Paris · en alternance, rentrée le 25 septembre 2026", "2026 – 2028"),
+    ("Mastère Management et Conseil en SI", "ESGI · Paris · entrée en Bac+4 en septembre 2026", "2026 – 2028"),
     ("Bachelor Management et Conseil en SI", "ESGI · Paris", "2024 – 2026"),
     ("DEUST Informatique (Bac+2)", "CNAM · Paris", "2021 – 2023"),
 ]
@@ -94,7 +95,7 @@ SKILLS = [
     ("IA appliquée", "Développement assisté par IA (Kiro), LLM en local (Qwen)"),
 ]
 
-LANGUAGES = "Français (langue maternelle) · Anglais B2 · Arabe littéraire B2"
+LANGUAGES = "Anglais B2 · Arabe littéraire B2"
 
 # ─────────────────────────────── Mise en page ───────────────────────────────
 
@@ -130,32 +131,41 @@ CONTENT_W = PAGE_W - 2 * MARGIN_X - 2 * FRAME_PADDING
 SEP = '<font color="#a7b4bb">   |   </font>'
 
 
+def fr(text):
+    """Typographie française : espace insécable avant « : », « ; » et « % »."""
+    return re.sub(r" ([:;%])", "\u00a0\\1", text)
+
+
+def P(text, style):
+    return Paragraph(fr(text), style)
+
+
 def section(title):
     return [
         Spacer(1, 12),
-        Paragraph(title.upper(), S["h"]),
+        P(title.upper(), S["h"]),
         HRFlowable(width="100%", thickness=0.6, color=RULE, spaceBefore=2, spaceAfter=5),
     ]
 
 
 def heading_row(left, sub, dates):
     """Intitulé à gauche, dates à droite, ligne grise en dessous."""
-    t = Table([[Paragraph(left, S["item"]), Paragraph(dates, S["date"])]], colWidths=[CONTENT_W - 32 * mm, 32 * mm])
+    t = Table([[P(left, S["item"]), P(dates, S["date"])]], colWidths=[CONTENT_W - 32 * mm, 32 * mm])
     t.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "BOTTOM"), ("LEFTPADDING", (0, 0), (-1, -1), 0),
                            ("RIGHTPADDING", (0, 0), (-1, -1), 0), ("TOPPADDING", (0, 0), (-1, -1), 0),
                            ("BOTTOMPADDING", (0, 0), (-1, -1), 0)]))
-    return [t, Paragraph(sub, S["sub"])]
+    return [t, P(sub, S["sub"])]
 
 
 def bullets(items):
     return ListFlowable(
-        [ListItem(Paragraph(b, S["bullet"]), leftIndent=11, value="•") for b in items],
-        bulletType="bullet", bulletColor=TEAL, bulletFontSize=10, leftIndent=11, bulletOffsetY=0.5, spaceBefore=2,
+        [ListItem(P(b, S["bullet"]), leftIndent=11, value="•") for b in items],
+        bulletType="bullet", bulletFontName="Calibri", bulletColor=TEAL, bulletFontSize=10, leftIndent=11, bulletOffsetY=0.5, spaceBefore=2,
     )
 
 
 def key_value_table(rows, key_width):
-    t = Table([[Paragraph(k, S["key"]), Paragraph(v, S["body"])] for k, v in rows], colWidths=[key_width, CONTENT_W - key_width])
+    t = Table([[P(k, S["key"]), P(v, S["body"])] for k, v in rows], colWidths=[key_width, CONTENT_W - key_width])
     t.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0),
                            ("RIGHTPADDING", (0, 0), (-1, -1), 4), ("TOPPADDING", (0, 0), (-1, -1), 1.2),
                            ("BOTTOMPADDING", (0, 0), (-1, -1), 1.2)]))
@@ -166,22 +176,22 @@ def build(path: Path, private: dict | None):
     story = []
 
     # En-tête
-    story.append(Paragraph("SAMIR MOGHRABI", S["name"]))
+    story.append(P("SAMIR MOGHRABI", S["name"]))
     story.append(Spacer(1, 2))
-    story.append(Paragraph("Assistant chef de projet SI · Alternance", S["role"]))
+    story.append(P("Assistant chef de projet SI · Alternance", S["role"]))
     story.append(Spacer(1, 4))
     contact = [private["location"], private["phone"]] if private else ["Paris, France"]
     contact.append(f'<a href="mailto:{EMAIL}" color="#18576a">{EMAIL}</a>')
-    story.append(Paragraph(SEP.join(contact), S["meta"]))
-    story.append(Paragraph(SEP.join(f'<a href="{url}" color="#18576a">{label}</a>' for label, url in LINKS), S["meta"]))
+    story.append(P(SEP.join(contact), S["meta"]))
+    story.append(P(SEP.join(f'<a href="{url}" color="#18576a">{label}</a>' for label, url in LINKS), S["meta"]))
     story.append(Spacer(1, 5))
-    story.append(Paragraph(
+    story.append(P(
         "<b>Disponible dès maintenant</b> · alternance de 2 ans · rythme 3 semaines en entreprise / 1 semaine à l’école",
         S["avail"]))
 
     # Profil
     story += section("Profil")
-    story.append(Paragraph(PROFILE, S["body"]))
+    story.append(P(PROFILE, S["body"]))
 
     # Expérience
     story += section("Expérience professionnelle")
@@ -192,7 +202,7 @@ def build(path: Path, private: dict | None):
 
     # Projets
     story += section("Projets personnels · open source")
-    story.append(Paragraph(PROJECTS_INTRO, S["sub"]))
+    story.append(P(PROJECTS_INTRO, S["sub"]))
     story.append(bullets([f"<b>{name}</b> <font color='#52616b'>({stack})</font> — {text}" for name, stack, text in PROJECTS]))
 
     # Formation
@@ -208,7 +218,7 @@ def build(path: Path, private: dict | None):
 
     # Langues
     story += section("Langues")
-    story.append(Paragraph(LANGUAGES, S["body"]))
+    story.append(P(LANGUAGES, S["body"]))
 
     doc = SimpleDocTemplate(
         str(path), pagesize=A4, leftMargin=MARGIN_X, rightMargin=MARGIN_X, topMargin=14 * mm, bottomMargin=12 * mm,
