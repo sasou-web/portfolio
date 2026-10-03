@@ -42,8 +42,16 @@ npm run build    # génère /dist (site statique, déployable partout)
 
 ### CV
 
-Le CV est `public/CV_Samir_Moghrabi.pdf` (icône dans la barre du haut, boutons « Mon CV » du profil).
-Pour le mettre à jour, remplace ce fichier en gardant le même nom. Pour le retirer : `cvUrl: undefined` dans `profile`.
+Le CV est généré par `scripts/cv/build_cv.py` (contenu en haut du fichier) :
+
+```bash
+pip install reportlab
+python scripts/cv/build_cv.py
+```
+
+- `public/CV_Samir_Moghrabi.pdf` : version web publiée sur le site, **sans téléphone ni adresse**.
+- `cv/CV_Samir_Moghrabi.pdf` : version complète pour les candidatures. Elle lit le téléphone et l'adresse dans
+  `scripts/cv/prive.json`. Ce fichier et le dossier `cv/` sont ignorés par Git : ils ne sont jamais publiés.
 
 ### Projets
 

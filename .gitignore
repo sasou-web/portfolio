@@ -1,3 +1,6 @@
 node_modules
 dist
 .claude/
+# CV complet (téléphone, adresse) : jamais publié
+scripts/cv/prive.json
+/cv/
