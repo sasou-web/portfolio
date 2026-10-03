@@ -85,8 +85,8 @@ export const profile: Profile = {
     { name: L('Anglais', 'English'), level: 'B2' },
     { name: L('Arabe littéraire', 'Modern Standard Arabic'), level: 'B2' },
   ],
-  // Mets ton CV dans public/cv.pdf puis remplace par 'cv.pdf' pour afficher l'icône CV
-  cvUrl: undefined,
+  // Fichier public/CV_Samir_Moghrabi.pdf (mets undefined pour masquer le CV)
+  cvUrl: 'CV_Samir_Moghrabi.pdf',
 }
 
 /* ──────────────────────────── PANNEAU SOCIAL ──────────────────────────── */

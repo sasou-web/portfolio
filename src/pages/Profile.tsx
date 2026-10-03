@@ -47,6 +47,15 @@ function Overview() {
             <HexButton size="sm" onClick={() => navigate('jouer')}>{ui.common.contactMe}</HexButton>
             {profile.cvUrl && <HexButton size="sm" onClick={() => openExternal(profile.cvUrl!)}>{ui.profile.cv}</HexButton>}
           </div>
+          {profile.languages.length > 0 && (
+            <div className="profile__langs" aria-label={ui.profile.languages}>
+              {profile.languages.map((l, i) => (
+                <span key={i} className="langs__item">
+                  {t(l.name)} <b>{t(l.level)}</b>
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -59,19 +68,11 @@ function Overview() {
                 <span className="label">{ui.common.level(profile.level)}</span>
               </Tip>
             </div>
-            {profile.bio.map((p, i) => (
-              <p key={i} className="body-text">{t(p)}</p>
-            ))}
-            {profile.languages.length > 0 && (
-              <div className="langs">
-                <span className="label">{ui.profile.languages}</span>
-                {profile.languages.map((l, i) => (
-                  <span key={i} className="langs__item">
-                    {t(l.name)} <b>{t(l.level)}</b>
-                  </span>
-                ))}
-              </div>
-            )}
+            <div className="profile__bio scroll">
+              {profile.bio.map((p, i) => (
+                <p key={i} className="body-text">{t(p)}</p>
+              ))}
+            </div>
           </div>
 
           {profile.lookingFor && profile.lookingFor.length > 0 && (
@@ -88,7 +89,12 @@ function Overview() {
                   </div>
                 ))}
               </dl>
-              <HexButton size="sm" block onClick={() => navigate('jouer')}>{ui.common.contactMe}</HexButton>
+              <div className="seeking__actions">
+                <HexButton size="sm" block onClick={() => navigate('jouer')}>{ui.common.contactMe}</HexButton>
+                {profile.cvUrl && (
+                  <HexButton size="sm" block onClick={() => openExternal(profile.cvUrl!)}>{ui.profile.cv}</HexButton>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -289,7 +295,7 @@ export function ProfilePage({ sub }: { sub?: string }) {
         active={active}
         onSelect={(id) => navigate(`profil/${id}`)}
       />
-      <div className="page__content scroll" key={active}>
+      <div className={`page__content scroll ${active === 'apercu' ? 'is-fit' : ''}`} key={active}>
         {active === 'apercu' && <Overview />}
         {active === 'maitrise' && <Mastery />}
         {active === 'defis' && <Challenges />}

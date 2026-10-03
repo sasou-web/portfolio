@@ -42,8 +42,8 @@ npm run build    # génère /dist (site statique, déployable partout)
 
 ### CV
 
-Le CV n'est pas publié pour l'instant (il contient ton numéro de téléphone et ton adresse). Pour l'ajouter :
-dépose-le dans `public/cv.pdf` et mets `cvUrl: 'cv.pdf'` dans `profile` — l'icône CV apparaît dans la barre du haut.
+Le CV est `public/CV_Samir_Moghrabi.pdf` (icône dans la barre du haut, boutons « Mon CV » du profil).
+Pour le mettre à jour, remplace ce fichier en gardant le même nom. Pour le retirer : `cvUrl: undefined` dans `profile`.
 
 ### Projets
 
