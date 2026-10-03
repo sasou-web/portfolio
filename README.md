@@ -64,21 +64,15 @@ dépose-le dans `public/cv.pdf` et mets `cvUrl: 'cv.pdf'` dans `profile` — l'i
 Le client utilise *Beaufort for LOL* et *Spiegel*. Si elles sont installées sur la machine,
 elles sont utilisées automatiquement ; sinon le site retombe sur Cinzel et Source Sans 3 (Google Fonts).
 
-## Mise en ligne sur moghrabi.fr (GitHub Pages)
+## Mise en ligne
 
-Le dépôt est `sasou-web/portfolio`. Chaque push sur `main` reconstruit et publie le site
-(`.github/workflows/deploy.yml`). Adresse GitHub : https://sasou-web.github.io/portfolio/
+Le site est en ligne sur **https://moghrabi.fr** (GitHub Pages, dépôt `sasou-web/portfolio`).
+Chaque push sur `main` reconstruit et republie le site automatiquement (`.github/workflows/deploy.yml`),
+en environ une minute.
 
-Déjà en place : DNS OVH (`A` → 185.199.108–111.153, `www` → `sasou-web.github.io`) et GitHub Pages activé.
-
-Pour rattacher moghrabi.fr, GitHub demande de prouver que le domaine t'appartient
-(il est encore réservé par un ancien site Pages) :
-
-1. https://github.com/settings/pages → **Add a domain** → `moghrabi.fr`.
-2. OVH → moghrabi.fr → **Zone DNS** → **Ajouter une entrée** → **TXT** avec le sous-domaine et la valeur affichés par GitHub
-   (`_github-pages-challenge-sasou-web`).
-3. Retour sur GitHub → **Verify** (quelques minutes de propagation).
-4. Dépôt → **Settings → Pages → Custom domain** : `moghrabi.fr`, puis **Enforce HTTPS** quand le certificat est prêt.
+- DNS chez OVH : `A` → 185.199.108–111.153, `www` → `sasou-web.github.io`, TXT `_github-pages-challenge-sasou-web`
+  (vérification du domaine, à garder).
+- HTTPS forcé ; `http://` et `www.` redirigent vers `https://moghrabi.fr`.
 
 ## Mentions
 
