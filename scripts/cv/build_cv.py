@@ -75,9 +75,9 @@ PROJECTS = [
     ("Kyro", "Rust, Tauri 2, SvelteKit, SQLite",
      "médiathèque 100 % locale : version 1.0 publiée, 568 tests automatisés."),
     ("Qobee", "Rust, Tauri 2, Svelte 5",
-     "lecteur audio haute fidélité : sortie bit-perfect (WASAPI exclusif), égaliseur, ReplayGain."),
+     "lecteur audio haute fidélité : sortie bit-perfect WASAPI, égaliseur, ReplayGain."),
     ("XK Bot", "Node.js, discord.js",
-     "bot Discord en service pour une communauté : rôles de rang via API, tournois, tickets, dashboard web."),
+     "bot Discord en production : rangs via API, tournois, tickets, dashboard web."),
 ]
 
 EDUCATION = [
@@ -87,7 +87,7 @@ EDUCATION = [
 ]
 
 SKILLS = [
-    ("Gestion de projet", "Coordination de déploiements, support utilisateurs, documentation technique, Jira, Trello"),
+    ("Gestion de projet", "Coordination de déploiements, support utilisateurs, documentation, Jira, Trello"),
     ("Reporting & données", "Excel avancé (TCD, formules), VBA, consolidation de données"),
     ("Automatisation & systèmes", "Python, Bash, cron, Git, Linux ; supervision Nagios et Zabbix"),
     ("Développement", "C# / .NET, Rust, TypeScript, Svelte, Node.js"),
@@ -95,7 +95,6 @@ SKILLS = [
 ]
 
 LANGUAGES = "Français (langue maternelle) · Anglais B2 · Arabe littéraire B2"
-INTERESTS = "Cinéma · univers cyberpunk · League of Legends · balades dans Paris"
 
 # ─────────────────────────────── Mise en page ───────────────────────────────
 
@@ -126,15 +125,16 @@ S = {
 
 PAGE_W, PAGE_H = A4
 MARGIN_X = 17 * mm
-CONTENT_W = PAGE_W - 2 * MARGIN_X
+FRAME_PADDING = 6  # marge intérieure par défaut du cadre de SimpleDocTemplate (de chaque côté)
+CONTENT_W = PAGE_W - 2 * MARGIN_X - 2 * FRAME_PADDING
 SEP = '<font color="#a7b4bb">   |   </font>'
 
 
 def section(title):
     return [
-        Spacer(1, 9),
+        Spacer(1, 12),
         Paragraph(title.upper(), S["h"]),
-        HRFlowable(width="100%", thickness=0.6, color=RULE, spaceBefore=2, spaceAfter=4),
+        HRFlowable(width="100%", thickness=0.6, color=RULE, spaceBefore=2, spaceAfter=5),
     ]
 
 
@@ -187,7 +187,7 @@ def build(path: Path, private: dict | None):
     story += section("Expérience professionnelle")
     for i, e in enumerate(EXPERIENCES):
         if i:
-            story.append(Spacer(1, 5))
+            story.append(Spacer(1, 7))
         story.append(KeepTogether(heading_row(e["title"], e["org"], e["dates"]) + [bullets(e["bullets"])]))
 
     # Projets
@@ -199,16 +199,16 @@ def build(path: Path, private: dict | None):
     story += section("Formation")
     for i, (title, sub, dates) in enumerate(EDUCATION):
         if i:
-            story.append(Spacer(1, 3))
+            story.append(Spacer(1, 5))
         story += heading_row(title, sub, dates)
 
     # Compétences
     story += section("Compétences")
     story.append(key_value_table(SKILLS, 44 * mm))
 
-    # Langues et centres d'intérêt
-    story += section("Langues et centres d’intérêt")
-    story.append(key_value_table([("Langues", LANGUAGES), ("Centres d’intérêt", INTERESTS)], 44 * mm))
+    # Langues
+    story += section("Langues")
+    story.append(Paragraph(LANGUAGES, S["body"]))
 
     doc = SimpleDocTemplate(
         str(path), pagesize=A4, leftMargin=MARGIN_X, rightMargin=MARGIN_X, topMargin=14 * mm, bottomMargin=12 * mm,
